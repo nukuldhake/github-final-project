@@ -61,10 +61,10 @@ regd_users.put("/review/:isbn", (req, res) => {
           filtered_book['reviews'][reviewer] = review;
           books[isbn] = filtered_book;
       }
-      res.send("Review added/updated successfully");
+      return res.status(200).send({message: "Review added/updated successfully", reviews: filtered_book.reviews});
   }
   else{
-      res.send("Unable to find book!");
+      return res.status(404).send("Unable to find book!");
   }
 });
 
@@ -75,10 +75,10 @@ regd_users.delete("/review/:isbn", (req, res) => {
   let filtered_book = books[isbn];
   if (filtered_book) {
       delete filtered_book['reviews'][reviewer];
-      res.send("Review deleted successfully");
+      return res.status(200).send({message: `Review for ISBN ${isbn} deleted`});
   }
   else{
-      res.send("Unable to find book!");
+      return res.status(404).send("Unable to find book!");
   }
 });
 
